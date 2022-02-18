@@ -27,53 +27,68 @@ export default class PostsController {
     }
     res.json(response)
   }
-  // static async apiGetPostById(req, res, next) {
-  //   try {
-  //     let id = req.params.id || {}
-  //     let post = await PostsDAO.getPostByID(id)
-  //     if (!post) {
-  //       res.status(404).json({ error: "Not found" })
-  //       return
-  //     }
-  //     res.json(post)
-  //   } catch (e) {
-  //     console.log(`api, ${e}`)
-  //     res.status(500).json({ error: e })
-  //   }
-  // }
+  
+  static async apiGetPostById(req, res, next) {
+    try {
+      let id = req.params.id || {}
+      let post = await PostsDAO.getPostByID(id)
+      if (!post) {
+        res.status(404).json({ error: "Not found" })
+        return
+      }
+      res.json(post)
+    } catch (e) {
+      console.log(`api, ${e}`)
+      res.status(500).json({ error: e })
+    }
+  }
 
   static async apiAddPost(req, res, next) {
     try {
-      const postId = req.body.post_id
       const objective = req.body.objective
       const plan = req.body.plan
       const strengths = req.body.strengths
       const weakness = req.body.weakness
+      const motivation = req.body.motivation
+      const anxiety = req.body.anxiety
+      const concentration = req.body.concentration
+      const confidence = req.body.confidence
+      const decision_making = req.body.decision_making
       const notes = req.body.notes
       const date = new Date()
 
-      const PostResponse = await PostsDAO.addPost(
-        postId,
+      const postResponse = await PostsDAO.addPost(
         objective,
         plan,
         strengths,
         weakness,
+        motivation,
+        anxiety,
+        concentration,
+        confidence,
+        decision_making,
         notes,
         date
       )
+      console.log(postResponse)
       res.json({ status: "success" })
     } catch (e) {
       res.status(500).json({ error: e.message })
     }
   }
 
-  static async apiUpdateReview(req, res, next) {
+  static async apiUpdatePost(req, res, next) {
     try {
       const postId = req.body.post_id
       const objective = req.body.objective
       const plan = req.body.plan
       const strengths = req.body.strengths
       const weakness = req.body.weakness
+      const motivation = req.body.motivation
+      const anxiety = req.body.anxiety
+      const concentration = req.body.concentration
+      const confidence = req.body.confidence
+      const decisionMaking = req.body.decision_making
       const notes = req.body.notes
       const date = req.body.date
 
@@ -83,6 +98,11 @@ export default class PostsController {
         plan,
         strengths,
         weakness,
+        motivation,
+        anxiety,
+        concentration,
+        confidence,
+        decisionMaking,
         notes,
         date
       )
@@ -111,6 +131,7 @@ export default class PostsController {
       const postResponse = await PostsDAO.deletePost(
         postId,
       )
+      console.log(postResponse)
       res.json({ status: "success" })
     } catch (e) {
       res.status(500).json({ error: e.message })
