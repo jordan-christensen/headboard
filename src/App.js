@@ -1,21 +1,9 @@
 import React from 'react';
-// import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import { BrowserRouter as Router } from 'react-router-dom'
-import Header from './components/Header';
+import { Routes, Route, Link } from 'react-router-dom'
 import Feed from './components/Feed';
+import NewPost from './components/NewPost';
 
 const App = () => {
-  const [user, setUser] = React.useState(null);
-
-  // Login
-  async function login(user = null) {
-    setUser(user);
-  }
-
-  // logout
-  async function logout() {
-    setUser(null);
-  }
 
   // Fetch entry
   
@@ -28,10 +16,28 @@ const App = () => {
 
 
   return (
-    <Router>
-      <Header />
-      <Feed />
-    </Router>
+    <div className="App">
+      <header>
+        <nav>
+          <img src={require('./assets/images/logo.png')} alt="logo"/>
+          <Link to={"/feed"} className="nav-link">
+            Feed
+          </Link>
+          <Link to={"/post"} className="nav-link">
+            Create Post
+          </Link>
+        </nav>
+      </header>
+      <Routes>
+        <Route exact path={["/", "/feed"]} component={Feed}/>
+        <Route 
+          path="/post"
+          render={(props) => (
+            <NewPost />
+          )}
+        />
+      </Routes>
+    </div>
   )
 }
 
