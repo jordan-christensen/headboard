@@ -5,7 +5,17 @@ import Header from './components/Header';
 import Feed from './components/Feed';
 
 const App = () => {
-  // Fetch entries
+  const [user, setUser] = React.useState(null);
+
+  // Login
+  async function login(user = null) {
+    setUser(user);
+  }
+
+  // logout
+  async function logout() {
+    setUser(null);
+  }
 
   // Fetch entry
   
